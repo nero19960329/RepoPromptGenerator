@@ -87,6 +87,7 @@ def main(
     files: List[str] | None,
     ext: List[str],
 ) -> None:
+    base_dir = None
     if dir:
         base_dir = Path(dir)
         if not base_dir.exists():
@@ -106,7 +107,10 @@ def main(
     codes = {}
     for file in file_paths:
         try:
-            file_relative = Path(file).relative_to(base_dir.resolve())
+            if base_dir:
+                file_relative = Path(file).relative_to(base_dir.resolve()).as_posix()
+            else:
+                file_relative = Path(file).name
             codes[file_relative] = Path(file).read_text()
         except Exception as e:
             logger.error(f"Failed to read code from {file}: {str(e)}")
