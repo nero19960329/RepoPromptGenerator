@@ -23,9 +23,10 @@ def get_file_structure(dir: Path, ext: List[str]) -> FileStructure:
         if file.is_dir():
             # If file is a directory, get its structure recursively
             try:
-                file_structure[file.resolve().as_posix()] = get_file_structure(
-                    file, ext
-                )
+                sub_structure = get_file_structure(file, ext)
+                # Only add this sub directory to the structure if it is not empty
+                if sub_structure:
+                    file_structure[file.resolve().as_posix()] = sub_structure
             except Exception as e:
                 logger.error(f"Failed to get file structure of {file}: {str(e)}")
                 raise
@@ -105,7 +106,8 @@ def main(
     codes = {}
     for file in file_paths:
         try:
-            codes[file] = Path(file).read_text()
+            file_relative = Path(file).relative_to(base_dir.resolve())
+            codes[file_relative] = Path(file).read_text()
         except Exception as e:
             logger.error(f"Failed to read code from {file}: {str(e)}")
             raise
