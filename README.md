@@ -16,6 +16,7 @@ Clone the repository and install the dependencies:
 git clone https://github.com/yourusername/python-source-code-analyzer.git
 cd python-source-code-analyzer
 pip install -r requirements.txt
+export PYTHONPATH=$PYTHONPATH:$(pwd)
 ```
 
 ## Usage
@@ -23,13 +24,13 @@ pip install -r requirements.txt
 You can run the script from the command line with arguments:
 
 ```bash
-python main.py --dir /path/to/directory
+python -m repopg --dir /path/to/directory
 ```
 
 or
 
 ```bash
-python main.py --files file1.py file2.py
+python -m repopg --files file1.py file2.py
 ```
 
 Where `--dir` points to the directory you want to analyze, and `--files` lists the specific files you want to analyze.
@@ -37,7 +38,7 @@ Where `--dir` points to the directory you want to analyze, and `--files` lists t
 You can also specify the file extensions you're interested in with the `--ext` argument:
 
 ```bash
-python main.py --dir /path/to/directory --ext .py .txt
+python -m repopg --dir /path/to/directory --ext .py .txt
 ```
 
 This script only analyzes Python (`*.py`) files by default.
