@@ -20,5 +20,4 @@ jobs:
     - name: Run integration tests
       run: |
         export PYTHONPATH=$PYTHONPATH:$(pwd)
-        sudo chmod +x ./tests/integration_test.sh
         ./tests/integration_test.sh
